@@ -61,10 +61,12 @@ TempleOS [-reset] [-memory MiB] [-cpus N] [-fullscreen] [-accel tcg|kvm|hvf|whpx
          [-data DIR] [-- extra QEMU args]
 ```
 
-Speed: Intel Macs use Hypervisor.framework when it's available. Apple
-Silicon Macs and Windows use QEMU's emulator. TempleOS is small enough that
-this is comfortably fast. On Windows, `-accel whpx` tries Windows Hypervisor
-Platform, if that optional feature is enabled.
+Speed: the apps use QEMU's emulator (TCG). TempleOS is small enough that
+this is comfortably fast. Hardware acceleration is opt-in because it is
+unreliable with TempleOS: `-accel hvf` on Intel Macs currently crashes
+QEMU during boot, and `-accel whpx` on Windows needs the optional Windows
+Hypervisor Platform feature. On Linux the launcher uses KVM when
+`/dev/kvm` is available.
 
 ## Building
 

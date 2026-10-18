@@ -290,19 +290,15 @@ func accelerators(force string) []string {
 		return []string{force}
 	}
 	var accel []string
-	switch runtime.GOOS {
-	case "darwin":
-		if runtime.GOARCH == "amd64" {
-			accel = append(accel, "hvf")
-		}
-	case "linux":
+	if runtime.GOOS == "linux" {
 		if f, err := os.OpenFile("/dev/kvm", os.O_RDWR, 0); err == nil {
 			f.Close()
 			accel = append(accel, "kvm")
 		}
 	}
-	// On Windows, WHPX needs an optional Windows feature and is unreliable
-	// with TempleOS, so it is opt-in through -accel whpx.
+	// HVF (Intel Macs) and WHPX (Windows) are opt-in through -accel: QEMU's
+	// HVF instruction decoder aborts on code TempleOS runs at boot, and WHPX
+	// needs an optional Windows feature and is unreliable with TempleOS.
 	return append(accel, "tcg")
 }
 
