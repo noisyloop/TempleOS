@@ -390,6 +390,7 @@ def build(root, out_path, stage1, auto_install=False):
                      kernel.clus & 3)
     img[sect(21):sect(22)] = s1
 
+    os.makedirs(os.path.dirname(os.path.abspath(out_path)), exist_ok=True)
     with open(out_path, "wb") as f:
         f.write(img)
     return len(img)

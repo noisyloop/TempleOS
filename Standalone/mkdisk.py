@@ -101,6 +101,7 @@ def main():
     if qcow2 and not args.qemu_img:
         sys.exit("mkdisk: qemu-img is required for .qcow2 output")
 
+    os.makedirs(os.path.dirname(os.path.abspath(args.output)), exist_ok=True)
     with tempfile.TemporaryDirectory() as tmp:
         iso = os.path.join(tmp, "AutoInstall.ISO")
         stage1 = nasm_bin(os.path.join(HERE, "boot", "BootDVD.asm"))
